@@ -13,7 +13,7 @@ User Interface: The user interface will be the raw terminal (at least initially,
 Technical Design: Seeing as this project will be a two-player, network-based game, it will rely on the use of sockets, similarly to how they were used in Work 23 (minus the forking server aspect). It will also need to allocate memory to store the contents of the players' boards (2 each), and rely on 2-D array semantics to determine ship placements, hits, and displaying the board. For taking player inputs the program will need to handle files and stdin. It will likely also rely on some other concepts, such as signal handling, to provide the user with a more refined experience (you need to know when your opponent abandons the game!). Depending on how ambitious we become in the later stages of the project, we may also utilize structs for socket communication in place of integers or strings, and perhaps utilize them for player-to-player communication. However, the biggest portion of this project will deal with the order of messages being read and written with the socket. Seeing as our game will need many inputs being sent and received in a very specific schedule, the majority of our attention will likely be spent orchestrating this. Israel and Logan will focus on the socket-based communication and organization aspects of the project, whereas Shapin will accomplish the graphical points. 
 </p>
 
-Required Libraries:
+Required Libraries:<br>
 -SDL
 
 Timeline:
