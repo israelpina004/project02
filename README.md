@@ -16,9 +16,9 @@ Technical Design: Seeing as this project will be a two-player, network-based gam
 Required Libraries:<br>
 -SDL
 
-Timeline:
-Jan 12-13: Shapin familiarizes with SDL; Logan and Israel will plan the game’s algorithms and build the initial server-client interaction, mimicking a two-member chat server, and start coding the game.
+Timeline: <br>
+Jan 12-13: Shapin familiarizes with SDL; Logan and Israel will plan the game’s algorithms and build the initial server-client interaction, mimicking a two-member chat server, and start coding the game.<br>
 Jan 14-15: Shapin codes the graphics for the game; Logan and Israel will continue coding the game and make it work through the terminal without graphics for now.
-Jan 16-18: We all work together to synthesize the graphics and the actual game’s code together.
+Jan 16-18: We all work together to synthesize the graphics and the actual game’s code together.<br>
 Jan 19-20: Find a way to implement a chat server that runs along with the game to allow for player communication. Any leftover bugs will also be checked for and fixed.
 
