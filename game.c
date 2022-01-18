@@ -1,4 +1,6 @@
 //Works, but needs to be streamlined.
+//Only the setup of the game so far.
+//Will incorporate into main file later.
 
 #include "pipe_networking.h"
 
