@@ -1,6 +1,4 @@
-//Preliminary game setup, still needs work, will incorporate into other file(s)
-//later.
-
+//Works, but needs to be streamlined.
 
 #include "pipe_networking.h"
 
@@ -45,8 +43,15 @@ int carrier(int board[10][10]) {
   }
 
   int x, y;
-  printf("Enter x- and y-coordinates: ");
-  scanf("%d %d", &x, &y);
+  while(1) {
+    printf("Enter x- and y-coordinates: ");
+    scanf("%d %d", &x, &y);
+    if(error_check(x, y, board) == -1) {
+      printf("\nERROR: Enter valid coordinates.\n\n");
+      continue;
+    }
+    break;
+  }
   board[x][y] = 1;
 
   printf("\nWould you like your ship oriented horizontally? ");
@@ -105,7 +110,7 @@ int carrier(int board[10][10]) {
 
         if(strcmp(s, "Left") == 0 || strcmp(s, "left") == 0 || strcmp(s, "l") == 0) {
           for(i = 1; i < 5; i++) {
-            check = error_check(x-1, y, board);
+            check = error_check(x-i, y, board);
             if(check == -1) {
               break;
             }
@@ -243,7 +248,7 @@ int battleship(int board[10][10], int coords[4][2]) {
 
         if(strcmp(s, "Left") == 0 || strcmp(s, "left") == 0 || strcmp(s, "l") == 0) {
           for(i = 1; i < 4; i++) {
-            check = error_check(x-1, y, board);
+            check = error_check(x-i, y, board);
             if(check == -1) {
               break;
             }
@@ -325,7 +330,7 @@ int cruiser(int board[10][10], int coords[3][2]) {
     coords[0][0] = x;
     coords[0][1] = y;
     if(error_check(x, y, board) == -1) {
-      printf("ERROR: Enter valid coordinates.\n");
+      printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
     break;
@@ -389,7 +394,7 @@ int cruiser(int board[10][10], int coords[3][2]) {
 
         if(strcmp(s, "Left") == 0 || strcmp(s, "left") == 0 || strcmp(s, "l") == 0) {
           for(i = 1; i < 3; i++) {
-            check = error_check(x-1, y, board);
+            check = error_check(x-i, y, board);
             if(check == -1) {
               break;
             }
@@ -467,7 +472,7 @@ int sub(int board[10][10], int coords[3][2]) {
     coords[0][0] = x;
     coords[0][1] = y;
     if(error_check(x, y, board) == -1) {
-      printf("ERROR: Enter valid coordinates.\n");
+      printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
     break;
@@ -531,7 +536,7 @@ int sub(int board[10][10], int coords[3][2]) {
 
         if(strcmp(s, "Left") == 0 || strcmp(s, "left") == 0 || strcmp(s, "l") == 0) {
           for(i = 1; i < 3; i++) {
-            check = error_check(x-1, y, board);
+            check = error_check(x-i, y, board);
             if(check == -1) {
               break;
             }
@@ -609,7 +614,7 @@ int destroyer(int board[10][10], int coords[2][2]) {
     coords[0][0] = x;
     coords[0][1] = y;
     if(error_check(x, y, board) == -1) {
-      printf("ERROR: Enter valid coordinates.\n");
+      printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
     break;
@@ -673,7 +678,7 @@ int destroyer(int board[10][10], int coords[2][2]) {
 
         if(strcmp(s, "Left") == 0 || strcmp(s, "left") == 0 || strcmp(s, "l") == 0) {
           for(i = 1; i < 2; i++) {
-            check = error_check(x-1, y, board);
+            check = error_check(x-i, y, board);
             if(check == -1) {
               break;
             }
