@@ -34,19 +34,21 @@ int main(int argc, int argv[]){
   }
   if(d){
     socket_fd=client_setup();
+    printf("Chat initiated! \n");
     while(1){
-      printf("\nEnter a string: ");
       fgets(s, 50, stdin);
-      if(strcmp(s,"exit")==0){printf("\n[Subserver] Exiting...\n"); break;}
       write(socket_fd, s, sizeof(s));
       read(socket_fd, s, sizeof(s));
-      printf("\nReturned string: %s", s);
+      printf("%s\n",s);
     }
   }else{
     socket_fd=server_setup();
+    printf("Chat initiated! \n");
     while(1){
       if(read(socket_fd, s, sizeof(s))<=0){break;}
-      write(socket_fd, cap(s, sizeof(s)), sizeof(s));
+      printf("%s\n",s);
+      fgets(s, 50, stdin);
+      write(socket_fd, s, sizeof(s));
     }
     sighandler(SIGINT);
   }

@@ -11,6 +11,5 @@
 #include <signal.h>
 #include <sys/socket.h>
 #include <netdb.h>
-
 int server_setup();
 int client_setup();
