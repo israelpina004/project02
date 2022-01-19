@@ -1,53 +1,69 @@
-//Works, but needs to be streamlined.
-//Only the setup of the game so far.
-//Will incorporate into main file later.
+//Preliminary game setup, still needs work, will incorporate into other file(s)
+//later.
+
 
 #include "pipe_networking.h"
 
 int carrier(int board[10][10]);
-int error_check(int x, int y, int board[10][10]);
 int battleship(int board[10][10], int coords[4][2]);
 int cruiser(int board[10][10], int coords[3][2]);
 int sub(int board[10][10], int coords[3][2]);
 int destroyer(int board[10][10], int coords[2][2]);
+int error_check(int x, int y, int board[10][10]);
+int letter_to_num(char letter);
 
 int main() {
   int i, j;
-
-  int board[10][10];
+  int user_board[10][10];
+  int attack_board[10][10];
   int battle[4][2];
   int carr_sub[3][2];
   int dest[2][2];
 
-  carrier(board);
-  battleship(board, battle);
-  cruiser(board, carr_sub);
-  sub(board, carr_sub);
-  destroyer(board, dest);
+  carrier(user_board);
+  battleship(user_board, battle);
+  cruiser(user_board, carr_sub);
+  sub(user_board, carr_sub);
+  destroyer(user_board, dest);
+
+  printf("\nYour attack board:\n");
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
+      attack_board[i][j] = 0;
+      printf("%d ", attack_board[i][j]);
+    }
+    printf("\n");
+  }
 
   return 0;
 }
 
 int carrier(int board[10][10]) {
-
-  printf("\nState where you will like to place your carrier.\n");
-  printf("Type the coordinates in this manner: x y \n");
-  printf("Note: the coordinates start from (0,0) and go up to (9,9).\n\n");
-
+  printf("Your board:\n");
   //Sets the board up.
   //Also ensures that, if the user inputs invalid coordinates, the board is
   //reset.
   int i, j;
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
       board[i][j] = 0;
+      printf("%d ", board[i][j]);
     }
+    printf("\n");
   }
 
-  int x, y;
+  printf("\nState where you will like to place your carrier.\n");
+  printf("Type the coordinates in this manner: (Letter)(Number) \n");
+  printf("Note: The lowest letter is A and the highest is J. The lowest number is 1 and the highest is 10.\n");
+
+  char letter;
+  int x;
+  int y;
   while(1) {
-    printf("Enter x- and y-coordinates: ");
-    scanf("%d %d", &x, &y);
+    scanf("%c %d", &letter, &y);
+    y -= 1;
+    x = letter_to_num(letter);
+
     if(error_check(x, y, board) == -1) {
       printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
@@ -149,13 +165,12 @@ int carrier(int board[10][10]) {
     return 0;
   }
 
-  printf("\nYour carrier's coordinates:\n");
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
-      if(board[i][j] == 1) {
-        printf("(%d,%d)\n", i, j);
-      }
+  printf("\nYour board:\n");
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
+      printf("%d ", board[i][j]);
     }
+    printf("\n");
   }
 
   return 0;
@@ -164,12 +179,7 @@ int carrier(int board[10][10]) {
 int battleship(int board[10][10], int coords[4][2]) {
 
   printf("\nState where you will like to place your battleship.\n");
-  printf("Type the coordinates in this manner: x y \n");
-  printf("Note: the coordinates start from (0,0) and go up to (9,9).\n\n");
 
-  //Sets the board up.
-  //Also ensures that, if the user inputs invalid coordinates, the board is
-  //reset.
   int i, j;
   for(i = 0; i < 4; i++) {
     coords[i][0] = 0;
@@ -180,18 +190,24 @@ int battleship(int board[10][10], int coords[4][2]) {
   //inputs invalid coordinates at this point, as that would be annoying. Instead,
   //this array stores the coordinates beforehand and the program checks to see if
   //they are valid before putting them on the board.
-  int x, y;
+  char letter;
+  int x;
+  int y;
   while(1) {
-    printf("Enter x- and y-coordinates: ");
-    scanf("%d %d", &x, &y);
-    coords[0][0] = x;
-    coords[0][1] = y;
+    scanf("%c %d", &letter, &y);
+    y -= 1;
+    x = letter_to_num(letter);
+
     if(error_check(x, y, board) == -1) {
       printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
+
+    coords[0][0] = x;
+    coords[0][1] = y;
     break;
   }
+
   printf("\nWould you like your ship oriented horizontally? ");
   printf("(Answering \"no\" to this question will orient it vertically.) ");
 
@@ -287,9 +303,6 @@ int battleship(int board[10][10], int coords[4][2]) {
     printf("\nERROR: Please input new coordinates.\n");
     battleship(board, coords);
 
-    for(i = 0; i < 4; i++) {
-      board[coords[i][0]][coords[i][1]] = 2;
-    }
     return 0;
   }
 
@@ -297,13 +310,12 @@ int battleship(int board[10][10], int coords[4][2]) {
     board[coords[i][0]][coords[i][1]] = 2;
   }
 
-  printf("\nYour battleship's coordinates:\n");
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
-      if(board[i][j] == 2) {
-        printf("(%d,%d)\n", i, j);
-      }
+  printf("\nYour board:\n");
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
+      printf("%d ", board[i][j]);
     }
+    printf("\n");
   }
 
   return 0;
@@ -312,8 +324,6 @@ int battleship(int board[10][10], int coords[4][2]) {
 int cruiser(int board[10][10], int coords[3][2]) {
 
   printf("\nState where you will like to place your cruiser.\n");
-  printf("Type the coordinates in this manner: x y \n");
-  printf("Note: the coordinates start from (0,0) and go up to (9,9).\n\n");
 
   //A separate array is necessary because the board cannot reset after the user
   //inputs invalid coordinates at this point, as that would be annoying. Instead,
@@ -325,16 +335,21 @@ int cruiser(int board[10][10], int coords[3][2]) {
     coords[i][1] = 0;
   }
 
-  int x, y;
+  char letter;
+  int x;
+  int y;
   while(1) {
-    printf("Enter x- and y-coordinates: ");
-    scanf("%d %d", &x, &y);
-    coords[0][0] = x;
-    coords[0][1] = y;
+    scanf("%c %d", &letter, &y);
+    y -= 1;
+    x = letter_to_num(letter);
+
     if(error_check(x, y, board) == -1) {
       printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
+
+    coords[0][0] = x;
+    coords[0][1] = y;
     break;
   }
 
@@ -439,13 +454,12 @@ int cruiser(int board[10][10], int coords[3][2]) {
     board[coords[i][0]][coords[i][1]] = 3;
   }
 
-  printf("\nYour cruiser's coordinates:\n");
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
-      if(board[i][j] == 3) {
-        printf("(%d,%d)\n", i, j);
-      }
+  printf("\nYour board:\n");
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
+      printf("%d ", board[i][j]);
     }
+    printf("\n");
   }
 
   return 0;
@@ -454,8 +468,6 @@ int cruiser(int board[10][10], int coords[3][2]) {
 int sub(int board[10][10], int coords[3][2]) {
 
   printf("\nState where you will like to place your submarine.\n");
-  printf("Type the coordinates in this manner: x y \n");
-  printf("Note: the coordinates start from (0,0) and go up to (9,9).\n\n");
 
   //A separate array is necessary because the board cannot reset after the user
   //inputs invalid coordinates at this point, as that would be annoying. Instead,
@@ -467,16 +479,21 @@ int sub(int board[10][10], int coords[3][2]) {
     coords[i][1] = 0;
   }
 
-  int x, y;
+  char letter;
+  int x;
+  int y;
   while(1) {
-    printf("Enter x- and y-coordinates: ");
-    scanf("%d %d", &x, &y);
-    coords[0][0] = x;
-    coords[0][1] = y;
+    scanf("%c %d", &letter, &y);
+    y -= 1;
+    x = letter_to_num(letter);
+
     if(error_check(x, y, board) == -1) {
       printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
+
+    coords[0][0] = x;
+    coords[0][1] = y;
     break;
   }
 
@@ -581,13 +598,12 @@ int sub(int board[10][10], int coords[3][2]) {
     board[coords[i][0]][coords[i][1]] = 4;
   }
 
-  printf("\nYour submarine's coordinates:\n");
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
-      if(board[i][j] == 4) {
-        printf("(%d,%d)\n", i, j);
-      }
+  printf("\nYour board:\n");
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
+      printf("%d ", board[i][j]);
     }
+    printf("\n");
   }
 
   return 0;
@@ -596,8 +612,6 @@ int sub(int board[10][10], int coords[3][2]) {
 int destroyer(int board[10][10], int coords[2][2]) {
 
   printf("\nState where you will like to place your destroyer.\n");
-  printf("Type the coordinates in this manner: x y \n");
-  printf("Note: the coordinates start from (0,0) and go up to (9,9).\n\n");
 
   //A separate array is necessary because the board cannot reset after the user
   //inputs invalid coordinates at this point, as that would be annoying. Instead,
@@ -609,16 +623,21 @@ int destroyer(int board[10][10], int coords[2][2]) {
     coords[i][1] = 0;
   }
 
-  int x, y;
+  char letter;
+  int x;
+  int y;
   while(1) {
-    printf("Enter x- and y-coordinates: ");
-    scanf("%d %d", &x, &y);
-    coords[0][0] = x;
-    coords[0][1] = y;
+    scanf("%c %d", &letter, &y);
+    y -= 1;
+    x = letter_to_num(letter);
+
     if(error_check(x, y, board) == -1) {
       printf("\nERROR: Enter valid coordinates.\n\n");
       continue;
     }
+
+    coords[0][0] = x;
+    coords[0][1] = y;
     break;
   }
 
@@ -723,13 +742,12 @@ int destroyer(int board[10][10], int coords[2][2]) {
     board[coords[i][0]][coords[i][1]] = 5;
   }
 
-  printf("\nYour destroyer's coordinates:\n");
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
-      if(board[i][j] == 5) {
-        printf("(%d,%d)\n", i, j);
-      }
+  printf("\nYour board:\n");
+  for(j = 0; j < 10; j++) {
+    for(i = 0; i < 10; i++) {
+      printf("%d ", board[i][j]);
     }
+    printf("\n");
   }
 
   return 0;
@@ -743,4 +761,40 @@ int error_check(int x, int y, int board[10][10]) {
     return -1;
   }
   return 0;
+}
+
+int letter_to_num(char letter) {
+  if(letter == 'A' || letter == 'a') {
+    return 0;
+  }
+  else if(letter == 'B' || letter == 'b') {
+    return 1;
+  }
+  else if(letter == 'C' || letter == 'c') {
+    return 2;
+  }
+  else if(letter == 'D' || letter == 'd') {
+    return 3;
+  }
+  else if(letter == 'E' || letter == 'e') {
+    return 4;
+  }
+  else if(letter == 'F' || letter == 'f') {
+    return 5;
+  }
+  else if(letter == 'G' || letter == 'g') {
+    return 6;
+  }
+  else if(letter == 'H' || letter == 'h') {
+    return 7;
+  }
+  else if(letter == 'I' || letter == 'i') {
+    return 8;
+  }
+  else if(letter == 'J' || letter == 'j') {
+    return 9;
+  }
+  else {
+    return -1;
+  }
 }
