@@ -34,19 +34,24 @@ int main(int argc, int argv[]){
   }
   if(d){
     socket_fd=client_setup();
-    printf("Chat initiated! \n");
+    printf("Connection Successful! \n");
     while(1){
+      printf("Enter a message: ");
       fgets(s, 50, stdin);
       write(socket_fd, s, sizeof(s));
-      read(socket_fd, s, sizeof(s));
+      printf("Received message: ");
+      if(read(socket_fd, s, sizeof(s))<=0){printf("[Client] Failed to read.\n"); break;}
       printf("%s\n",s);
     }
+    sighandler(SIGINT);
   }else{
     socket_fd=server_setup();
-    printf("Chat initiated! \n");
+    printf("Connection Successful! \n");
     while(1){
-      if(read(socket_fd, s, sizeof(s))<=0){break;}
+      printf("Received message: ");
+      if(read(socket_fd, s, sizeof(s))<=0){printf("[Server] Failed to read.\n"); break;}
       printf("%s\n",s);
+      printf("Enter a message: ");
       fgets(s, 50, stdin);
       write(socket_fd, s, sizeof(s));
     }
