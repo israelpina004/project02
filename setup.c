@@ -5,7 +5,6 @@
 
 int setup(int user_board[10][10]) {
   int i, j;
-  int user_board[10][10];
   int attack_board[10][10];
   int battle[4][2];
   int carr_sub[3][2];
