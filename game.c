@@ -1,3 +1,9 @@
+/*Not finished, needs:
+ -error checking (i.e. if coordinates called for are valid or if the opponent has already shot there)
+ -win condition checking
+ -checking for which ships have sunk
+*/
+
 #include "networking.h"
 #include "game.h"
 
