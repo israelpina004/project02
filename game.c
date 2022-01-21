@@ -5,13 +5,14 @@
 */
 
 #include "networking.h"
+#include "setup.h"
 #include "game.h"
 
 int game(int user_board[10][10], int attack_board[10][10], int socket_fd) {
   int i, j;
   char s[100];
 
-  printf("\nYour attack board:\n", );
+  printf("\nYour attack board:\n");
   for(i = 0; i < 10; i++) {
     for(j = 0; j < 10; j++) {
       printf("%d ", attack_board[j][i]);
@@ -25,7 +26,6 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd) {
   if(read(socket_fd, s, sizeof(s))<=0)
   {
     printf("[Client] Failed to read.\n");
-    break;
   }
 
   int x, y;
@@ -44,7 +44,7 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd) {
 }
 
 char* ship(int id) {
-  swtich(id) {
+  switch(id) {
     case 1:
       return "You've hit the carrier!\n";
       break;

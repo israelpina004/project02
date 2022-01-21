@@ -1,9 +1,9 @@
 //Preliminary game setup, still needs work, will incorporate into other file(s)
 //later.
-#include "pipe_networking.h"
+#include "networking.h"
 #include "setup.h"
 
-int setup(int user_board[10][10], int attack_board [10][10]) {
+int setup(int user_board[10][10], int attack_board[10][10]) {
   int i, j;
   int battle[4][2];
   int carr_sub[3][2];
