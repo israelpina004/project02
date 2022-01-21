@@ -22,6 +22,8 @@ static void sighandler(int signo){
 
 int main(int argc, int argv[]){
   signal(SIGINT, sighandler);
+  int user_board[10][10];
+  int attack_board[10][10];
   char a[10];
   char s[50];
   int d=-1;
@@ -36,6 +38,8 @@ int main(int argc, int argv[]){
   if(d){
     socket_fd=client_setup();
     printf("Connection Successful! \n");
+    printf("Entering preparatory phase!\n");
+    setup(user_board, attack_board);
     while(1){
       printf("Enter a message: ");
       fgets(s, 50, stdin);
@@ -48,6 +52,9 @@ int main(int argc, int argv[]){
   }else{
     socket_fd=server_setup();
     printf("Connection Successful! \n");
+    printf("Connection Successful! \n");
+    printf("Entering preparatory phase!\n");
+    setup(user_board, attack_board);
     while(1){
       printf("Received message: ");
       if(read(socket_fd, s, sizeof(s))<=0){printf("[Server] Failed to read.\n"); break;}
