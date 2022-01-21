@@ -3,9 +3,8 @@
 #include "pipe_networking.h"
 #include "setup.h"
 
-int setup(int user_board[10][10]) {
+int setup(int user_board[10][10], int attack_board [10][10]) {
   int i, j;
-  int attack_board[10][10];
   int battle[4][2];
   int carr_sub[3][2];
   int dest[2][2];
@@ -16,13 +15,10 @@ int setup(int user_board[10][10]) {
   sub(user_board, carr_sub);
   destroyer(user_board, dest);
 
-  printf("\nYour attack board:\n");
   for(j = 0; j < 10; j++) {
     for(i = 0; i < 10; i++) {
       attack_board[i][j] = 0;
-      printf("%d ", attack_board[i][j]);
     }
-    printf("\n");
   }
 
   return 0;
@@ -759,8 +755,11 @@ int letter_to_num(char letter) {
       return letter - 65;
     }
     else {
-      return letter -97;
+      return letter - 97;
     }
+  }
+  else if(isdigit(letter)) {
+    return letter - '0';
   }
   else {
     return -1;

@@ -1,4 +1,5 @@
 #include "networking.h"
+#include "setup.h"
 
 char* cap(char* s, int size){
   int h;
