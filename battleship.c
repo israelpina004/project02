@@ -42,27 +42,22 @@ int main(int argc, int argv[]){
     printf("Entering preparatory phase!\n");
     setup(user_board, attack_board);
     while(1){
-      printf("Enter a message: ");
-      fgets(s, 50, stdin);
-      write(socket_fd, s, sizeof(s));
-      printf("Received message: ");
-      if(read(socket_fd, s, sizeof(s))<=0){printf("[Client] Failed to read.\n"); break;}
-      printf("%s\n",s);
+      if(game(user_board, attack_board, socket_fd, 1)) {
+        break;
+      }
     }
     sighandler(SIGINT);
-  }else{
+  }
+  else{
     socket_fd=server_setup();
     printf("Connection Successful! \n");
     printf("Connection Successful! \n");
     printf("Entering preparatory phase!\n");
     setup(user_board, attack_board);
     while(1){
-      printf("Received message: ");
-      if(read(socket_fd, s, sizeof(s))<=0){printf("[Server] Failed to read.\n"); break;}
-      printf("%s\n",s);
-      printf("Enter a message: ");
-      fgets(s, 50, stdin);
-      write(socket_fd, s, sizeof(s));
+      if(game(user_board, attack_board, socket_fd, 0)) {
+        break;
+      }
     }
     sighandler(SIGINT);
   }
