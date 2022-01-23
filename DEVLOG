@@ -1,0 +1,8 @@
+-Jan. 13: Logan began to work on the networking portion of the game, creating a socket and trying to make a local connection between two computers work.
+-Jan. 15: Israel began to work on the setup of the game. The virtual board is represented as a 10x10 2D array. The user is prompted for where they would like to place their ship. The user is prompted for only one ship thus far.
+-Jan. 16: Israel finished the preliminary setup for the game. All ships and most errors are accounted for. Streamlining necessary.
+-Jan. 17: Israel and Logan worked on streamlining the setup process and removing any bugs.
+-Jan. 18: Logan was able to establish a local connection.
+-Jan. 19: Israel began to implement the setup code into the connection process. Bug fixes needed.
+-Jan. 20-21: Logan and Israel worked to fix any problems with the setup during the connection process. Work on coding the actual game began by Israel.
+-Jan. 22: Logan and Israel fixed any bugs with the game. A working command-line only version of Battleship was created.
