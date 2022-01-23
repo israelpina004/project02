@@ -33,14 +33,11 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
           printf("ERROR: Enter valid coordinates.\n");
         }else{break;}
       }else{
-        printf("Attack format: ':xy' \n Enter coordinates: ");
+        printf("Attack format: \":(Letter)(Number)\" \n Enter coordinates: ");
       }
     }
 
-    printf("attack check successful\n");
-
     write(socket_fd, s, sizeof(s));
-    printf("Sent attack, waiting for hit or miss ...\n");
     read(socket_fd, s, 100);
     if(strcmp(s, "Miss!\n")==0) {
       attack_board[x][y] = 7;
@@ -52,8 +49,8 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("%s\n", s);
     if(strcmp(s, " ")){
       return 1;
-    }else{printf("You did not win or lose\n");}
-    printf("\nYour attack board:\n");
+    }
+    printf("Your attack board:\n");
     for(i = 0; i < 10; i++) {
       for(j = 0; j < 10; j++) {
         printf("%d ", attack_board[j][i]);
@@ -105,7 +102,7 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
   }
 
   if(order) {
-    printf("\nP1: ");
+    printf("\nP2: ");
     while(1){
       fgets(s, 100, stdin);
       if(s[0] == ':') {
@@ -121,8 +118,6 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
       }
     }
 
-    printf("attack check successful\n");
-
     write(socket_fd, s, sizeof(s));
     printf("Sent attack, waiting for hit or miss ...\n");
     read(socket_fd, s, 100);
@@ -136,8 +131,8 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("%s\n", s);
     if(strcmp(s, " ")){
       return 1;
-    }else{printf("You did not win or lose\n");}
-    printf("\nYour attack board:\n");
+    }
+    printf("Your attack board:\n");
     for(i = 0; i < 10; i++) {
       for(j = 0; j < 10; j++) {
         printf("%d ", attack_board[j][i]);
@@ -147,10 +142,6 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
   }
   return 0;
 }
-
-
-
-
 
 int attack_check(int x, int y, int attack_board[10][10]) {
     if(x < 0 || x > 9 || y < 0 || y > 9) {
