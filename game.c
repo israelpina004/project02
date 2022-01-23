@@ -8,35 +8,64 @@
 #include "setup.h"
 #include "game.h"
 
-int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int order) {
-  int i, j;
-  char s[100];
-
-  printf("\nYour attack board:\n");
-  for(i = 0; i < 10; i++) {
-    for(j = 0; j < 10; j++) {
-      printf("%d ", attack_board[j][i]);
-    }
-    printf("\n");
+static void sighandler(int signo){
+  if(signo == SIGINT ){
+    printf("\nPlayer has left, exiting...\n");
+    exit(0);
   }
+}
+
+int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int order) {
+  int i, j, x, y;
+  char s[100];
+  char temp[100];
 
   if(!order) {
     printf("\nP1: ");
-    fgets(s, 100, stdin);
-    attack_check(s, attack_board);
-    printf("frefrfr\n");
+    while(1){
+      fgets(s, 100, stdin);
+      if(s[0] == ':') {
+        char c;
+        sscanf(s, ":%c%d", &c, &y);
+        y -= 1;
+        x = letter_to_num(c);
+        if(attack_check(x, y, attack_board)){
+          printf("ERROR: Enter valid coordinates.\n");
+        }else{break;}
+      }else{
+        printf("Attack format: ':xy' \n Enter coordinates: ");
+      }
+    }
+
+    printf("attack check successful\n");
 
     write(socket_fd, s, sizeof(s));
     printf("Sent attack, waiting for hit or miss ...\n");
-    read(socket_fd, s, sizeof(s));
-
+    read(socket_fd, s, 100);
+    if(strcmp(s, "Miss!\n")==0) {
+      attack_board[x][y] = 7;
+    }
     printf("%s\n", s);
+    read(socket_fd, s, 100);
+    printf("%s\n", s);
+    read(socket_fd, s, 100);
+    printf("%s\n", s);
+    if(strcmp(s, " \n")){
+      return 1;
+    }else{printf("You did not win or lose\n");}
+    printf("\nYour attack board:\n");
+    for(i = 0; i < 10; i++) {
+      for(j = 0; j < 10; j++) {
+        printf("%d ", attack_board[j][i]);
+      }
+      printf("\n");
+    }
   }
 
   printf("Waiting for opponent to attack ...\n");
   if(read(socket_fd, s, sizeof(s))<=0)
   {
-    printf("Failed to read.\n");
+    sighandler(SIGINT);
   }
   else if(s[0] == ':') {
     char c;
@@ -47,25 +76,25 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
 
     int id = user_board[x][y];
 
-    write(socket_fd, ship(id), sizeof(ship(id)));
-    if(strcmp(ship(id), "Miss!\n")) {
+    strncpy(temp, ship(id), 100);
+    write(socket_fd, temp, sizeof(temp));
+    if(strcmp(temp, "Miss!\n")) {
       user_board[x][y] = 6;
-      write(socket_fd, sink(id, user_board), sizeof(sink(id, user_board)));
-    }
-
-    user_board[x][y] = 6;
+      printf("It was a hit!\n");
+    }else{user_board[x][y] = 7; printf("It was a miss!\n");}
+    strncpy(temp, sink(id, user_board), 100);
+    write(socket_fd, temp, sizeof(temp));
   }
   else {
     printf("%s\n", s);
   }
 
+  char* msg = "You win!";
   if(win_lose(user_board) != 0) {
-    char* msg = "You win!";
     write(socket_fd, msg, sizeof(msg));
     printf("You lose.\n");
-
     return 1;
-  }
+  }else{msg=" \n"; write(socket_fd, msg, sizeof(msg));}
 
   printf("\nYour board:\n");
   for(i = 0; i < 10; i++) {
@@ -76,41 +105,64 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
   }
 
   if(order) {
-    printf("\nP2: ");
-    fgets(s, 100, stdin);
-    attack_check(s, attack_board);
+    printf("\nP1: ");
+    while(1){
+      fgets(s, 100, stdin);
+      if(s[0] == ':') {
+        char c;
+        sscanf(s, ":%c%d", &c, &y);
+        y -= 1;
+        x = letter_to_num(c);
+        if(attack_check(x, y, attack_board)){
+          printf("ERROR: Enter valid coordinates.\n");
+        }else{break;}
+      }else{
+        printf("Attack format: ':xy' \n Enter coordinates: ");
+      }
+    }
+
+    printf("attack check successful\n");
 
     write(socket_fd, s, sizeof(s));
-    read(socket_fd, s, sizeof(s));
-
+    printf("Sent attack, waiting for hit or miss ...\n");
+    read(socket_fd, s, 100);
+    if(strcmp(s, "Miss!\n")==0) {
+      attack_board[x][y] = 7;
+    }
     printf("%s\n", s);
+    read(socket_fd, s, 100);
+    printf("%s\n", s);
+    read(socket_fd, s, 100);
+    printf("%s\n", s);
+    if(strcmp(s, " \n")){
+      return 1;
+    }else{printf("You did not win or lose\n");}
+    printf("\nYour attack board:\n");
+    for(i = 0; i < 10; i++) {
+      for(j = 0; j < 10; j++) {
+        printf("%d ", attack_board[j][i]);
+      }
+      printf("\n");
+    }
   }
-
   return 0;
 }
 
-void attack_check(char* s, int attack_board[10][10]) {
-  if(s[0] == ':') {
-    char c;
-    int y;
-    sscanf(s, ":%c%d", &c, &y);
-    y -= 1;
-    int x = letter_to_num(c);
 
+
+
+
+int attack_check(int x, int y, int attack_board[10][10]) {
     if(x < 0 || x > 9 || y < 0 || y > 9) {
-      printf("ERROR: Enter valid coordinates.\n");
-      fgets(s, 100, stdin);
-      attack_check(s, attack_board);
+      return 1;
     }
-    else if(attack_board[x][y] == 6) {
-      printf("ERROR: Enter valid coordinates.\n");
-      fgets(s, 100, stdin);
-      attack_check(s, attack_board);
+    else if(attack_board[x][y] == 6 || attack_board[x][y] == 7) {
+      return 1;
     }
     else {
       attack_board[x][y] = 6;
+      return 0;
     }
-  }
 }
 
 char* ship(int id) {
@@ -159,8 +211,11 @@ char* sink(int id, int user_board[10][10]) {
     case 4:
       return "You've sunk my submarine!\n";
       break;
-    default:
+    case 5:
       return "You've sunk my destroyer!\n";
+      break;
+    default:
+      return "...\n";
       break;
   }
 
@@ -171,7 +226,7 @@ int win_lose(int user_board[10][10]) {
   int k, m;
   for(m = 0; m < 10; m++) {
     for(k = 0; k < 10; k++) {
-      if(user_board[k][m] != 0 || user_board[k][m] != 6) {
+      if(user_board[k][m] != 0 && user_board[k][m] != 6 && user_board[k][m] != 7) {
           return 0;
       }
     }
