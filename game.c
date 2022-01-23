@@ -50,7 +50,7 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("%s\n", s);
     read(socket_fd, s, 100);
     printf("%s\n", s);
-    if(strcmp(s, " \n")){
+    if(strcmp(s, " ")){
       return 1;
     }else{printf("You did not win or lose\n");}
     printf("\nYour attack board:\n");
@@ -89,12 +89,12 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("%s\n", s);
   }
 
-  char* msg = "You win!";
+  strncpy(temp, "You win!", sizeof(temp));
   if(win_lose(user_board) != 0) {
-    write(socket_fd, msg, sizeof(msg));
+    write(socket_fd, temp, sizeof(temp));
     printf("You lose.\n");
     return 1;
-  }else{msg=" \n"; write(socket_fd, msg, sizeof(msg));}
+  }else{strncpy(temp, " ", sizeof(temp)); write(socket_fd, temp, sizeof(temp));}
 
   printf("\nYour board:\n");
   for(i = 0; i < 10; i++) {
@@ -117,7 +117,7 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
           printf("ERROR: Enter valid coordinates.\n");
         }else{break;}
       }else{
-        printf("Attack format: ':xy' \n Enter coordinates: ");
+        printf("Attack format: ':xy' \nEnter coordinates: ");
       }
     }
 
@@ -134,7 +134,7 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("%s\n", s);
     read(socket_fd, s, 100);
     printf("%s\n", s);
-    if(strcmp(s, " \n")){
+    if(strcmp(s, " ")){
       return 1;
     }else{printf("You did not win or lose\n");}
     printf("\nYour attack board:\n");

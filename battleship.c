@@ -46,7 +46,7 @@ int main(int argc, int argv[]){
         break;
       }
     }
-    printf("Thank you for playing! i want to kill myself\n");
+    printf("Thank you for playing!\n");
     sighandler(SIGINT);
   }
   else{
@@ -60,6 +60,7 @@ int main(int argc, int argv[]){
         break;
       }
     }
+    printf("Thank you for playing!\n");
     sighandler(SIGINT);
   }
 }
