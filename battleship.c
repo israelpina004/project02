@@ -13,8 +13,8 @@ int main(){
   signal(SIGINT, sighandler);
   int user_board[10][10];
   int attack_board[10][10];
-  char a[10];
-  char s[50];
+  char* a = malloc(10 * sizeof(char *));
+  char* s = malloc(50 * sizeof(char *));
   int d=-1;
   int socket_fd;
   printf("Welcome to Battleship v1.0! \nPlease enter whether you want to: \n Create a Game [0] \n Join a Game [1] \n Help [2] \n\n");
@@ -31,7 +31,7 @@ int main(){
       printf("\nYou will be prompted to input coordinates in this format: ':(Letter)(Number)'\n");
       printf("How ship placements will work is that these coordinates are treated like the \"head\" of the ship.\n");
       printf("Thus, when you are prompted to place each ship either horizontally left or right or vertically up or down, ");
-      printf("all the other coordinates will be left, right, up, or down from the one you specify.\n\n");
+      printf("all the other coordinates will be left, right, up, or down from the one you specify, respectively.\n\n");
       printf("Good luck and godspeed, admiral.\n");
     }
     else{printf("Invalid response, please try again: \n ");}
@@ -63,4 +63,9 @@ int main(){
     printf("Thank you for playing!\n");
     sighandler(SIGINT);
   }
+
+  free(a);
+  free(s);
+
+  return 0;
 }

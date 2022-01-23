@@ -89,7 +89,7 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
   strncpy(temp, "You win!", sizeof(temp));
   if(win_lose(user_board) != 0) {
     write(socket_fd, temp, sizeof(temp));
-    printf("You lose.\n");
+    printf("\nYou lose.\n");
     return 1;
   }else{strncpy(temp, " ", sizeof(temp)); write(socket_fd, temp, sizeof(temp));}
 
