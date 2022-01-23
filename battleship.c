@@ -26,12 +26,17 @@ int main(){
     if(strcmp(a,"0\n")==0){printf("Creating a Game!\n"); d=0; break;}
     else if(strcmp(a,"1\n")==0){printf("Joining a Game!\n"); d=1; break;}
     else if(strcmp(a, "2\n") == 0) {
+      printf("\nBATTLESHIP\n");
       printf("\nThe objective of the game is to sink all five of your opponent's ships first.\n");
-      printf("Before each of you begins, you'll each have to place these ships on your virtual board.\n");
-      printf("\nYou will be prompted to input coordinates in this format: ':(Letter)(Number)'\n");
+      printf("Before you begin, you'll each have to place these ships on your virtual board.\n");
+      printf("\nYou will be prompted to input coordinates in this format: '(Letter)(Number)'\n");
       printf("How ship placements will work is that these coordinates are treated like the \"head\" of the ship.\n");
       printf("Thus, when you are prompted to place each ship either horizontally left or right or vertically up or down, ");
       printf("all the other coordinates will be left, right, up, or down from the one you specify, respectively.\n\n");
+      printf("When eveything is set up, you will see numbers on a 10x10 grid. 0 denotes an empty space. 1 denotes your carrier. 2 denotes your battleship. ");
+      printf("3 denotes your cruiser. 4 denotes your submarine. 5 denotes your destroyer.\n");
+      printf("As you shoot, 6 denotes a successful shot. 7 denotes an unsuccessful shot. You will have a virtual attack board ");
+      printf("to keep track of your shots.\n\n");
       printf("Good luck and godspeed, admiral.\n");
     }
     else{printf("Invalid response, please try again: \n ");}
@@ -47,7 +52,7 @@ int main(){
       }
     }
     printf("Thank you for playing!\n");
-    sighandler(SIGINT);
+    //sighandler(SIGINT);
   }
   else{
     socket_fd=server_setup();
@@ -61,11 +66,13 @@ int main(){
       }
     }
     printf("Thank you for playing!\n");
-    sighandler(SIGINT);
+    //sighandler(SIGINT);
   }
 
   free(a);
   free(s);
+
+  close(socket_fd);
 
   return 0;
 }

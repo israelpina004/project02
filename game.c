@@ -24,16 +24,16 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("\nP1: ");
     while(1){
       fgets(s, 100, stdin);
-      if(s[0] == ':') {
+      if(isalpha(s[0])) {
         char c;
-        sscanf(s, ":%c%d", &c, &y);
+        sscanf(s, "%c%d", &c, &y);
         y -= 1;
         x = letter_to_num(c);
         if(attack_check(x, y, attack_board)){
           printf("ERROR: Enter valid coordinates.\n");
         }else{break;}
       }else{
-        printf("Attack format: \":(Letter)(Number)\" \n Enter coordinates: ");
+        printf("Attack format: \"(Letter)(Number)\" \n Enter coordinates: ");
       }
     }
 
@@ -64,10 +64,10 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
   {
     sighandler(SIGINT);
   }
-  else if(s[0] == ':') {
+  else if(isalpha(s[0])) {
     char c;
     int y;
-    sscanf(s, ":%c%d", &c, &y);
+    sscanf(s, "%c%d", &c, &y);
     y -= 1;
     int x = letter_to_num(c);
 
@@ -81,9 +81,6 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     }else{user_board[x][y] = 7; printf("It was a miss!\n");}
     strncpy(temp, sink(id, user_board), 100);
     write(socket_fd, temp, sizeof(temp));
-  }
-  else {
-    printf("%s\n", s);
   }
 
   strncpy(temp, "You win!", sizeof(temp));
@@ -105,16 +102,16 @@ int game(int user_board[10][10], int attack_board[10][10], int socket_fd, int or
     printf("\nP2: ");
     while(1){
       fgets(s, 100, stdin);
-      if(s[0] == ':') {
+      if(isalpha(s[0])) {
         char c;
-        sscanf(s, ":%c%d", &c, &y);
+        sscanf(s, "%c%d", &c, &y);
         y -= 1;
         x = letter_to_num(c);
         if(attack_check(x, y, attack_board)){
           printf("ERROR: Enter valid coordinates.\n");
         }else{break;}
       }else{
-        printf("Attack format: ':xy' \nEnter coordinates: ");
+        printf("Attack format: \"(Letter)(Number)\" \nEnter coordinates: ");
       }
     }
 

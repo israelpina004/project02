@@ -16,4 +16,4 @@ game.o: game.c game.h
 	gcc -c game.c
 
 clean:
-	rm *.o
+	rm *.o battleship
