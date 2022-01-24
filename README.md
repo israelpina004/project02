@@ -1,4 +1,4 @@
-# Project 02
+# Project 02 - Battleship
 
 Names: Israel Pina, Esteak Shapin, Logan Ruzzier<br>
 Period: 4
@@ -11,6 +11,11 @@ Period: 4
 
 **Required Libraries:**<br>
 -SDL
+
+**How to install SDL:**<br>
+If you have Ubunto, running "sudo apt-get install libsdl2-2.0" should work.<br>
+For installing through the Windows command line (MinGW), [this website provides a helpful tutorial in doing so.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mingw/index.php).<br>
+For macOS users, [use this tutorial.](https://www.kth.se/social/files/56fd013ff276544e9cfdccd9/SDL-Setup-Mac%2810.11.1%29-Xcode%287.0.1%29.pdf)
 
 **Timeline:**<br>
 Jan 12-13: Shapin familiarizes with SDL; Logan and Israel will plan the game’s algorithms and build the initial server-client interaction, mimicking a two-member chat server, and start coding the game.<br>
