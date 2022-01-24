@@ -22,6 +22,6 @@ If you have Ubunto, running "sudo apt-get install libsdl2-2.0" should install th
 -Users are prompted to set up or join a game when starting the program.<br>
 -The one joining the game must type the host's IP address when asked to.<br>
 -The host may NOT ctrl-C out of the game at any moment. Doing so will prevent future successful program runs.<br>
--Users are asked to place their ships prior to the game starting. The program asks for coordinates and if the user would like to orient their ship left, right, up, or down from that coordinate. More information on ship placement is available after pressing "2" on the startup menu.<br>
+-Users are asked to place their ships prior to the game starting. The program asks for coordinates and if the user would like to orient their ship left, right, up, or down from those coordinates. Coordinates are formatted as (Letter)(Number) in this game, with the lowest letter being A and the highest being J. The lowest number is 1 and the highest is 9. More information on ship placement is available after pressing "2" on the startup menu.<br>
 -Players attack by inputting coordinates when prompted to. The game ends if one of the player's ships have all sunken.
 
