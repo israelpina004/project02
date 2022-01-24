@@ -13,9 +13,10 @@ Period: 4
 -SDL
 
 **How to install SDL:**<br>
-If you have Ubunto, running "sudo apt-get install libsdl2-2.0" should work.<br>
-For installing through the Windows command line (MinGW), [this website provides a helpful tutorial in doing so.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mingw/index.php)<br>
+For installing SDL through the Windows command line (MinGW), [this website provides a helpful tutorial in doing so.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mingw/index.php)<br>
 For macOS users, [use this tutorial.](https://www.kth.se/social/files/56fd013ff276544e9cfdccd9/SDL-Setup-Mac%2810.11.1%29-Xcode%287.0.1%29.pdf)
+For Linux users, [use this.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/linux/index.php)<br>
+If you have Ubunto, running "sudo apt-get install libsdl2-2.0" should install the SDL libraries.<br>
 
 **Timeline:**<br>
 Jan 12-13: Shapin familiarizes with SDL; Logan and Israel will plan the game’s algorithms and build the initial server-client interaction, mimicking a two-member chat server, and start coding the game.<br>
