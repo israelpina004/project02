@@ -130,7 +130,7 @@ int carrier(int board[10][10]) {
               break;
             }
 
-            board[x+i][y];
+            board[x+i][y] = 1;
           }
           break;
         }
