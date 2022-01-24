@@ -14,7 +14,7 @@ Period: 4
 
 **How to install SDL:**<br>
 For installing SDL through the Windows command line (MinGW), [this website provides a helpful tutorial in doing so.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/windows/mingw/index.php)<br>
-For macOS users, [use this tutorial.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/mac/index.php)
+For macOS users, [use this tutorial.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/mac/index.php)<br>
 For Linux users, [use this.](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/linux/index.php)<br>
 If you have Ubunto, running "sudo apt-get install libsdl2-2.0" should install the SDL libraries.<br>
 
